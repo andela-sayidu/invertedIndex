@@ -1,0 +1,34 @@
+{
+  "name": "inverted_index",
+  "version": "1.0.0",
+  "description": "checkpoint 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start ./karma.conf.js --single-run --browsers Chrome"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sayidu/invertedIndex.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sayidu/invertedIndex/issues"
+  },
+  "homepage": "https://github.com/sayidu/invertedIndex#readme",
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-preset-es2015": "^6.18.0",
+    "browser-sync": "^2.17.5",
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.2",
+    "gulp-load-plugins": "^1.4.0",
+    "jasmine-core": "^2.5.2",
+    "jshint": "^2.9.4",
+    "karma": "^1.3.0",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.0.2",
+    "materialize-css": "^0.97.8"
+  }
+}
