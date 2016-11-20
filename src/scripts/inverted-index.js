@@ -8,7 +8,7 @@ class invertedIndex {
 	}
 
 
-    sanitize(indexes) {
+	sanitize(indexes) {
 		let lowerindex = [];
 		indexes.map((word) => {
 			lowerindex.push(word.toLowerCase().replace(/[!''@#$%^&*,'.]/g, ""));
@@ -25,16 +25,16 @@ class invertedIndex {
 			let title = value.title;
 			let splitTitle = title.split(' ');
 			let textTitle = this.sanitize(splitTitle);
-      
+
 			let text = value.text;
 			let splitText = text.split(' ');
 			let content = this.sanitize(splitText);
-			
-			let mergeWords  = content.concat(textTitle);
+
+			let mergeWords = content.concat(textTitle);
 			completeIndex.push(mergeWords);
 		}
 		this.storeIndex(fileName, completeIndex);
-		return [fileName,completeIndex];
+		return [fileName, completeIndex];
 	}
 
 	storeIndex(textTitle, completeIndex) {
@@ -48,7 +48,7 @@ class invertedIndex {
 				} else {
 					words[word] = [pos];
 				}
-		});
+			});
 		}
 		return this.indexMap[textTitle] = words;
 	}
@@ -57,7 +57,11 @@ class invertedIndex {
 	* Get File Index
 	*/
 	getIndex(title) {
-		return this.indexMap[title];
+	  if(!this.indexMap[title]){
+	      return "wrong";
+	   }else{
+		  return this.indexMap[title];
+	   }
 	}
 
 
@@ -69,15 +73,15 @@ class invertedIndex {
 		let a = terms.split(' ');
 		var result = this.indexMap;
 		let keys = Object.keys(result);
-	
-    for (let key in keys) {
-      if (this.getIndex(keys[key])) {
-		  	a.forEach((term) => {
-				  if (result[keys[key]][term]) {
-				  	searchResult[term] = result[keys[key]][term];
-			  	}
-		  	});
-      }
+
+		for (let key in keys) {
+			if (this.getIndex(keys[key])) {
+				a.forEach((term) => {
+					if (result[keys[key]][term]) {
+						searchResult[term] = result[keys[key]][term];
+					}
+				});
+			}
 		}
 	}
 

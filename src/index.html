@@ -36,11 +36,12 @@
  
 
   <div class="row"> 
-      <ul> 
-        <li ng-repeat="title in titles">
-             <h6><i class="material-icons">folder</i> {{title}} </h6>
-           </li>
-      </ul>
+    <form action="#">
+    <p ng-repeat="title in titles">
+      <input name="group1" type="radio" id="{{title}}" />
+      <label for="{{title}}"><i class="material-icons">folder</i>{{title}}</label>
+    </p>
+    </form>
   </div>
 
 
@@ -74,19 +75,18 @@
  </form>
     </div> 
 
-
     <div class="col s12 m8 l9">
-      <table>
+      <table >
         <thead>
           <tr>
-              <th data-field="keywords">Keywords </th>
-              <th data-field="documents">Document {{i + 1}}</th>
+              <th> Keywords</th>
+              <th  ng-repeat="fileNo in filesLength" >Document {{fileNo}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="">
-            <td>Alvin</td>
-            <td>Eclair</td>
+          <tr ng-repeat="(key, value) in data">
+            <td>{{key}}</td>
+            <td>{{value}}</td>
           </tr>
         </tbody>
       </table>

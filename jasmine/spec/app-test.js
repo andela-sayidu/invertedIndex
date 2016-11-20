@@ -72,7 +72,6 @@ describe('Inverted Index TestSuite', () => {
             expect(testIndex.getIndex('books')).not.toBeUndefined();  
         });
         it('finds the correct index for a word', () => {
-            console.log(testIndex.searchIndex('alice'));
             expect(testIndex.searchIndex('alice')).toBe({ alice: [ '0' ] }); 
         });
     });
