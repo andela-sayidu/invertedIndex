@@ -8,32 +8,37 @@ class invertedIndex {
 	}
 
 
-	sanitize(indexes) {
-		return indexes.toLowerCase().replace(/[!''@#$%^&*,'.]/g, "");
+    sanitize(indexes) {
+		let lowerindex = [];
+		indexes.map((word) => {
+			lowerindex.push(word.toLowerCase().replace(/[!''@#$%^&*,'.]/g, ""));
+		});
+		return lowerindex;
 	}
-     
+
 	/*
 	* Create File Index
 	*/
 	createIndex(fileName, fileContent) {
 		let completeIndex = [];
-		for (let [key, value] of filepath.entries()) {
+		for (let value of fileContent) {
 			let title = value.title;
 			let splitTitle = title.split(' ');
-			textTitle = this.sanitize(splitTitle);
-
+			let textTitle = this.sanitize(splitTitle);
+      
 			let text = value.text;
 			let splitText = text.split(' ');
-			content = this.sanitize(splitText);
-			completeIndex.push(content.concat(textTitle));
+			let content = this.sanitize(splitText);
+			
+			let mergeWords  = content.concat(textTitle);
+			completeIndex.push(mergeWords);
 		}
 		this.storeIndex(fileName, completeIndex);
+		return [fileName,completeIndex];
 	}
 
-
 	storeIndex(textTitle, completeIndex) {
-		const words = {};
-		//hasOwnProperty
+		const words = {}
 		for (let pos in completeIndex) {
 			completeIndex[pos].forEach((word) => {
 				if (words[word]) {
@@ -43,10 +48,9 @@ class invertedIndex {
 				} else {
 					words[word] = [pos];
 				}
-			});
+		});
 		}
 		return this.indexMap[textTitle] = words;
-
 	}
 
 	/*
@@ -57,23 +61,24 @@ class invertedIndex {
 	}
 
 
-	//if only one file is uploaded, using only one file path. 
-	//if only one more than is uploaded, then accept all *.
-	//searchIndex(filepath,terms)
+	/*
+	* Search for particular words 
+	*/
 	searchIndex(terms) {
 		const searchResult = {};
 		let a = terms.split(' ');
 		var result = this.indexMap;
 		let keys = Object.keys(result);
-
-		for (let key in keys) {
-			a.forEach((term) => {
-				if (result[keys[key]][term]) {
-					searchResult[term] = result[keys[key]][term];
-				}
-			});
+	
+    for (let key in keys) {
+      if (this.getIndex(keys[key])) {
+		  	a.forEach((term) => {
+				  if (result[keys[key]][term]) {
+				  	searchResult[term] = result[keys[key]][term];
+			  	}
+		  	});
+      }
 		}
-		console.log(searchResult);
 	}
 
 }
