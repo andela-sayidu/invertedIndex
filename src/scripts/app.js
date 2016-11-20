@@ -24,17 +24,25 @@ app.controller('indexController', ($scope) => {
 
             $scope.$apply(() => {
                 $scope.titles.push(fileName);
-                $scope.filesLength.push(fileNo += 1);
+                $scope.filesLength.push(fileNo);
                 $scope.data;
             });
 
+            fileNo += 1;
         } else {
             $(document).ready(function () {
                 $('#modal1').modal('open');
             });
         }
     }
+
+     $scope.search = () => {
+            alert("dfffd");
+     }
+    
 });
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {

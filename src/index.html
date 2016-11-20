@@ -22,15 +22,13 @@
   <div class="container">
     <nav>
       <div class="nav-wrapper">
-        <div class="col s12">
-          <form>
+          <form ng-submit="search()">
             <div class="input-field">
-              <input id="search" type="search" required>
+              <input id="search" ng-model="terms" type="search" required>
               <label for="search"><i class="material-icons">search</i></label>
               <i class="material-icons">close</i>
             </div>
           </form>
-        </div>
       </div>
     </nav>
  
@@ -80,13 +78,16 @@
         <thead>
           <tr>
               <th> Keywords</th>
-              <th  ng-repeat="fileNo in filesLength" >Document {{fileNo}}</th>
+              <th ng-repeat="fileNo in filesLength">Document {{fileNo}}</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="(key, value) in data">
             <td>{{key}}</td>
-            <td>{{value}}</td>
+            <td ng-repeat="fileNo in filesLength">
+                  {{value.includes(fileNo.toString())}}
+                <i ng-if="{{value.includes(fileNo.toString())}}" class="material-icons">done</i>
+              </td>
           </tr>
         </tbody>
       </table>
