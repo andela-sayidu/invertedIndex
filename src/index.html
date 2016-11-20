@@ -1,52 +1,99 @@
- <!DOCTYPE html>
-  <html ng-app="invertedIndex">
-    <head>
-      <!--Import Google Icon Font-->
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="styles/css/materialize.min.css"  media="screen,projection"/>
+<!DOCTYPE html>
+<html>
+<head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script type="text/javascript" src="./scripts/inverted-index.js"></script>
+  <script type="text/javascript" src="./scripts/app.js"></script>
+  <title> Inverted Index</title> 
+</head>
 
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <title> Inverted Index</title>
-    </head>
 
-    <body>
-      <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="scripts/js/materialize.min.js"></script>
-      
-     <nav class="light-blue lighten-1" role="navigation">
-       <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Inverted Index</a>
-    </nav> 
-    
-   <div class="row">
-     </br>
-     
-      </br> <nav>
-    <div class="nav-wrapper">
-       <div class="col s12"><h5 class="header right white-text">  Search for words  </h4> 
-      <form>
-        <div class="input-field">
-          <input id="search" type="search" required>
-          <label for="search"><i class="material-icons">search</i></label>
-          <i class="material-icons">close</i>
+<body ng-app="myIndex" ng-controller="indexController"> 
+
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Inverted Index</a>
+  </nav>
+
+  <div class="container">
+    <nav>
+      <div class="nav-wrapper">
+        <div class="col s12">
+          <form>
+            <div class="input-field">
+              <input id="search" type="search" required>
+              <label for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
       </div>
-      <div class="col s12 m3 l3"><h5> Load JSON </h5>
-       <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-          
-       <a class="waves-effect waves-light btn">Upload file</a>
-
-      </div>
-      <div class="col s12 m9 l3"><h5> Search Results</h5></div>
-
-    </div>
-        
+    </nav>
  
-    </body>
 
-  </html>
-        
+  <div class="row"> 
+      <ul> 
+        <li ng-repeat="title in titles">
+             <h6><i class="material-icons">folder</i> {{title}} </h6>
+           </li>
+      </ul>
+  </div>
+
+
+ <div class="row"> 
+    <div class="col s12 m8 l3">
+      <form>
+        <div class="file-field input-field">
+          <div class="btn btn-small" >
+            <span>Upload JSON</span>
+            <input type="file" id="uploadJSON">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text"  value="Import a JSON file" accept="json">
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+            <p class="right-align"><button class="btn btn-small waves-effect waves-light" type="button" ng-click="createIndex(uploadJSON)">Create Index</button></p>
+        </div>
+        <!-- Failed Upload -->
+ <button data-target="modal1" class="btn modal-trigger">Modal</button>
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Failure</h4>
+      <p>Wrong File Format</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+    </div>
+  </div>          
+ </form>
+    </div> 
+
+
+    <div class="col s12 m8 l9">
+      <table>
+        <thead>
+          <tr>
+              <th data-field="keywords">Keywords </th>
+              <th data-field="documents">Document {{i + 1}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="">
+            <td>Alvin</td>
+            <td>Eclair</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+
+</body>
+
+</html>

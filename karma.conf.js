@@ -15,7 +15,8 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [
+    files: ['src/inverted-index.js',
+      'spec/tests/app-test.js'
     ],
 
 
@@ -27,6 +28,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      // './src/inverted-index.js': ['coverage']
     },
 
 
@@ -37,7 +39,7 @@ module.exports = function(config) {
 
 
     // web server port
-    port: 9876,
+    port: 3000,
 
 
     // enable / disable colors in the output (reporters and logs)
@@ -55,7 +57,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome','PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode

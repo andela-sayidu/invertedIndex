@@ -1,45 +1,58 @@
-'use strict'; 
+'use strict';
 
-//include gulp 
-//var gulp = require('gulp'); 
 import gulp from 'gulp';
-import browserSync from 'browser-sync'
+import fs from 'fs';
+import browserSync from 'browser-sync';
+import browserify from 'browserify';
+import eslint from 'gulp-eslint';
+import uglify from 'gulp-uglify';
+import source from 'vinyl-source-stream';
+import vinylBuffer from 'vinyl-buffer';
+import gulprun from 'gulp-run';
 
-var browser = browserSync.create(); 
+var browser = browserSync.create();
 
-//Loads gulp plug-ins into the plugins object. 
-import gulpLoadPlugins from 'gulp-load-plugins'; 
-const $ = gulpLoadPlugins(); 
-
-const src ={
-    html: './src/*.html', 
-    scripts: '/src/scripts/*.js'
-}
-
-const build = {
-    
-}
-
-// JS hint task
-gulp.task('jshint', function() {
-  gulp.src(src.scripts)
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('default'));
+//ESLint task
+gulp.task('eslint', function () {
+    return gulp.src('src/**').pipe(eslint({
+        'rules': {
+            'quotes': [1, 'single']
+        }
+    }))
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError());
 });
 
-//Build Homepage
-gulp.task('html',function(){
-    return gulp.src(src.html)
-                .pipe(gulp.dest('build/'));
-              //  .pipe($.connect.reload()); 
-});
 
 //Browser Test
-gulp.task('browserTest',function(){
-     browser.init(['src/styles/css.*.css',['src/scripts/js/*.js'],{
-         server: {
-             baseDir: './'
-         }
-     });
-    //  gulp.watch("src/*.html").on("change", reload);              
+gulp.task('syncApp', function () {
+    browser.init({
+        server: {
+            baseDir: './src'
+        }
+    });
+    gulp.watch("src/*.{html,/*.js,/*.css}").on('change', browser.reload);
 });
+
+gulp.task('tests',function() {
+    browser.init({
+        server:{
+            baseDir:'./src' 
+        }
+    }); 
+    gulp.watch('./jasmine/spec/inverted-index-test..js').on('change', browser.reload); 
+    gulp.watch('./src/scripts/inverted-index-test..js').on('change',browser.reload);
+}); 
+
+
+gulp.task('browserify', () => 
+    browserify('./jasmine/spec/inverted-index-test.js')
+        .bundle()
+        .pipe(source('app-test.js'))
+        .pipe(gulp.dest('./jasmine/spec'))
+); 
+
+gulp.task('testApp', ['browserify'], () => {
+   gulprun('karma start ./karma.conf.js --single-run').exec();
+});
+
