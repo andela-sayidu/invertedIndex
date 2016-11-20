@@ -25,7 +25,7 @@ $scope.createIndex = (fileName,fileContent) => {
                  $('#modal1').modal('open');
          });
      }
-}
+}   
   
 });
 
