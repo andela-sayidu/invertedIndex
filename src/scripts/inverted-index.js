@@ -7,7 +7,6 @@ class invertedIndex {
     this.indexMap = {};
   }
 
-
   sanitize(indexes) {
     let lowerindex = [];
     indexes.map((word) => {

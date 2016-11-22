@@ -34,25 +34,25 @@ gulp.task('syncApp', function () {
     gulp.watch("src/*.{html,/*.js,/*.css}").on('change', browser.reload);
 });
 
-gulp.task('tests',function() {
+gulp.task('tests', function () {
     browser.init({
-        server:{
-            baseDir:'./src' 
+        server: {
+            baseDir: './src'
         }
-    }); 
-    gulp.watch('./jasmine/spec/inverted-index-test..js').on('change', browser.reload); 
-    gulp.watch('./src/scripts/inverted-index-test..js').on('change',browser.reload);
-}); 
+    });
+    gulp.watch('./jasmine/spec/inverted-index-test..js').on('change', browser.reload);
+    gulp.watch('./src/scripts/inverted-index-test..js').on('change', browser.reload);
+});
 
 
-gulp.task('browserify', () => 
+gulp.task('browserify', () =>
     browserify('./jasmine/spec/inverted-index-test.js')
         .bundle()
         .pipe(source('app-test.js'))
         .pipe(gulp.dest('./jasmine/spec'))
-); 
+);
 
 gulp.task('testApp', ['browserify'], () => {
-   gulprun('karma start ./karma.conf.js --single-run').exec();
+    gulprun('karma start ./karma.conf.js --single-run').exec();
 });
 

@@ -18,10 +18,10 @@ describe('Inverted Index TestSuite', () => {
 
     describe('Sanitize', function () {
         it('return an array with sanitized tokens', () => {
-            expect(testIndex.sanitize((books[0].title).split(' '))).toEqual([ 'alice', 'in', 'wonderland' ]);
+            expect(testIndex.sanitize((books[0].title).split(' '))).toEqual(['alice', 'in', 'wonderland']);
         });
         it('filters out symbols', function () {
-            expect(testIndex.sanitize(['a&lice', 'i*n', 'wonderl@.and'])).toEqual([ 'alice', 'in', 'wonderland']);
+            expect(testIndex.sanitize(['a&lice', 'i*n', 'wonderl@.and'])).toEqual(['alice', 'in', 'wonderland']);
         });
     });
 
@@ -33,12 +33,12 @@ describe('Inverted Index TestSuite', () => {
     });
 
     describe('Create and Populate Index', () => {
-         let minibooks = [{ "title": "A", "text": "Alice." }];
+        let minibooks = [{ "title": "A", "text": "Alice." }];
         it('verifies that the JSON has been read', () => {
-            expect(testIndex.createIndex('books',minibooks)).toEqual([  'books', [ [ 'alice', 'a' ]]]);
+            expect(testIndex.createIndex('books', minibooks)).toEqual(['books', [['alice', 'a']]]);
         });
         it('verifies that the index maps strings to the correct Json objects in the array', () => {
-             expect(testIndex.storeIndex('books', [[ 'alice', 'a' ]])).toEqual({ alice: [ '0' ], a: [ '0' ] });
+            expect(testIndex.storeIndex('books', [['alice', 'a']])).toEqual({ alice: ['0'], a: ['0'] });
         });
     });
 
@@ -53,13 +53,13 @@ describe('Inverted Index TestSuite', () => {
 
     describe('Search Index', () => {
         it('searches for only valid titles', () => {
-            expect(testIndex.searchIndex('gggg')).toBeUndefined(); 
-            expect(testIndex.getIndex('books1')).toBeUndefined();  
-            expect(testIndex.getIndex('books')).not.toBeUndefined();  
+            expect(testIndex.searchIndex('gggg')).toBeUndefined();
+            expect(testIndex.getIndex('books1')).toBeUndefined();
+            expect(testIndex.getIndex('books')).not.toBeUndefined();
         });
         it('finds the correct index for a word', () => {
-            expect(testIndex.searchIndex('alice')).toBe({ alice: [ '0' ] }); 
+            expect(testIndex.searchIndex('alice')).toBe({ alice: ['0'] });
         });
     });
 
-}); 
+});
