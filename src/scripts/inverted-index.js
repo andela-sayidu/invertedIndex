@@ -37,6 +37,10 @@ class invertedIndex {
     return [fileName, completeIndex];
   }
 
+
+	/*
+	* Stores the File Index
+	*/
   storeIndex(textTitle, completeIndex) {
     const words = {}
 
@@ -80,9 +84,5 @@ class invertedIndex {
     }
     return searchResult;
   }
-
-
-
-
 }
 

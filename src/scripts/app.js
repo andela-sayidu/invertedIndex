@@ -4,12 +4,11 @@ app.controller('indexController', ($scope) => {
     const index = new invertedIndex();
 
     $scope.titles = [];
-    $scope.selectedFiles ='';
-
+    $scope.selectedFiles = '';
 
 
     $scope.uploadFile = (fileName, fileContent) => {
-        $scope.data ={};
+        $scope.data = {};
         $scope.docCount = [];
 
         if (fileName.toLowerCase().match(/\.json$/)) {
@@ -29,8 +28,7 @@ app.controller('indexController', ($scope) => {
 
             $scope.$apply(() => {
                 $scope.titles.push(fileName);
-                 $scope.selectedFiles=$scope.selectedFile;
-                 console.log($scope.selectedFiles);
+                $scope.selectedFiles = $scope.selectedFile;
             });
 
         } else {
