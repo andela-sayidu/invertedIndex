@@ -41,11 +41,11 @@
         </p>
       </form>
       <div>
-        <select class="browser-default">
+        <select class="browser-default" ng-model="selectedFile" >
                   <option value="" disabled selected>Select a File</option>
-                  <option ng-repeat="title in titles" ng-model="selectedFile">{{title}}</option>
-                  <option value="selectAll">All files</option>
-               </select>
+                  <option ng-repeat="title in titles" value="{{title}}">{{title}}</option>
+                  <option value="all"  ng-if="titles.length > 1"> All files</option>
+         </select>
       </div>
     </div>
 
@@ -80,7 +80,7 @@
         </form>
       </div>
       <div class="col s12 m8 l9">
-        <table ng-if="!docCount == 0">
+        <table ng-if="!docCount == 0" ng-show="showTable">
           <thead>
             <tr>
               <th> Keywords</th>
@@ -99,8 +99,9 @@
       </div>
 
       <div class="col s12 m8 l9">
-        <table ng-if="docCount > 0">
+        <table ng-show="searchResults">
           <thead>
+              <th> Search Results for {{selectedFile}}</th>
             <tr>
               <th> Keywords</th>
               <th ng-repeat="fileNo in docCount">Document {{fileNo}}</th>
@@ -109,7 +110,7 @@
           <tbody>
             <tr ng-repeat="(key, value) in searchResult">
               <td>{{key}}</td>
-              <td class="divider" ng-repeat="fileNo in docCount">
+              <td  ng-repeat="fileNo in docCount">
                 <i ng-if="value.includes(fileNo.toString())" class="material-icons">clear</i>
               </td>
             </tr>

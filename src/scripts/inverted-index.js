@@ -68,19 +68,18 @@ class invertedIndex {
 	/**
 	 * Search for Terms
 	 */
-  searchIndex(terms) {
+  searchIndex(fileName, terms) {
     const searchResult = {};
-    let a = terms.split(' ');
+    let query = terms.split(' ');
+    let sanitizeQuery = this.sanitize(query);
     var result = this.indexMap;
-    let keys = Object.keys(result);
 
-    for (let key in keys) {
-      a.forEach((term) => {
-        if (result[keys[key]][term]) {
-          searchResult[term] = result[keys[key]][term];
-        }
-      });
-    }
+    sanitizeQuery.forEach((term) => {
+      if (result[fileName][term]) {
+        searchResult[term] = result[fileName][term];
+      }
+    });
+
     return searchResult;
   }
 }

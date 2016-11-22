@@ -3,9 +3,9 @@ const app = angular.module('myIndex', []);
 app.controller('indexController', ($scope) => {
   const index = new invertedIndex();
 
+  $scope.showTable = true;
+  $scope.searchResults = false;
   $scope.titles = [];
-  $scope.selectedFiles = '';
-
 
   $scope.uploadFile = (fileName, fileContent) => {
     $scope.data = {};
@@ -20,10 +20,11 @@ app.controller('indexController', ($scope) => {
         for (let fileNo = 0; fileNo < content.length; fileNo++) {
           $scope.docCount.push(fileNo);
         }
+
         $scope.$apply($scope.docCount);
+
       }
       reader.readAsText(fileContent);
-
 
       $scope.$apply(() => {
         $scope.titles.push(fileName);
@@ -38,8 +39,10 @@ app.controller('indexController', ($scope) => {
   }
 
   $scope.search = () => {
+    $scope.showTable= false;
+    $scope.searchResults = true;
     let searchValue = $scope.terms;
-    $scope.searchResult = index.searchIndex($scope.fileNme, searchValue);
+    $scope.searchResult = index.searchIndex($scope.selectedFile,searchValue);
   }
 
 });
