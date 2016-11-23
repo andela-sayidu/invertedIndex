@@ -18,13 +18,15 @@ class invertedIndex {
    * @return {Array} array of words without special characters or symbols.
    */
   sanitize(indexes) {
-    return indexes.map(word => word.toLowerCase().replace(/[!''@#$%^&*,'.]/g, ""));
+    return indexes.map(word => word.toLowerCase()
+      .replace(/[!''@#$%^&*,'.]/g, ""));
   }
 
   /**
    * Create File Index
    * @function
-   * @param {String} fileName-Uploaded file;fileContent- Contents of the Json file.
+   * @param {String} fileName-Uploaded file
+   * @param {String} fileContent- Contents of the Json file.
    * @return {Array} returns filename, merged and sanitized contents of the json file
    */
   createIndex(fileName, fileContent) {
@@ -49,11 +51,12 @@ class invertedIndex {
   /**
    * Stores the File Index
    * @function
-   * @param {String,String} fileName, fileContents
+   * @param {String} fileName
+   * @param {String} fileContents
    * @return {Array} stores fileName and fileContent in the indexMap
    */
   storeIndex(textTitle, completeIndex) {
-    const words = {}
+    const words = {};
 
     for (let pos in completeIndex) {
       completeIndex[pos].forEach((word) => {
@@ -83,7 +86,8 @@ class invertedIndex {
   /**
    * Search Index
    * @function
-   * @param {String,String} fileName/title to searched
+   * @param {String} fileName
+   * @param {String} terms
    * @return {Object} returns search results
    */
   searchIndex(fileName, terms) {

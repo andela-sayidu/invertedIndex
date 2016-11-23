@@ -33,12 +33,22 @@ describe('Inverted Index TestSuite', () => {
     });
 
     describe('Create and Populate Index', () => {
-        let minibooks = [{ "title": "A", "text": "Alice." }];
+        let minibooks = [{
+            "title": "A",
+            "text": "Alice."
+        }];
         it('verifies that the JSON has been read', () => {
-            expect(testIndex.createIndex('books', minibooks)).toEqual(['books', [['alice', 'a']]]);
+            expect(testIndex.createIndex('books', minibooks)).toEqual(['books', [
+                ['alice', 'a']
+            ]]);
         });
         it('verifies that the index maps strings to the correct Json objects in the array', () => {
-            expect(testIndex.storeIndex('books', [['alice', 'a']])).toEqual({ alice: ['0'], a: ['0'] });
+            expect(testIndex.storeIndex('books', [
+                ['alice', 'a']
+            ])).toEqual({
+                alice: ['0'],
+                a: ['0']
+            });
         });
     });
 
@@ -58,7 +68,9 @@ describe('Inverted Index TestSuite', () => {
             expect(testIndex.getIndex('books')).not.toBeUndefined();
         });
         it('finds the correct index for a word', () => {
-            expect(testIndex.searchIndex('alice')).toBe({ alice: ['0'] });
+            expect(testIndex.searchIndex('alice')).toBe({
+                alice: ['0']
+            });
         });
     });
 
