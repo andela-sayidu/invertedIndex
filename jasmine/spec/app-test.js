@@ -82,12 +82,12 @@ describe('Inverted Index TestSuite', () => {
 
     describe('Search Index', () => {
         it('searches for only valid titles', () => {
-            expect(testIndex.searchIndex('gggg')).toBeUndefined();
-            expect(testIndex.getIndex('books1')).toBeUndefined();
-            expect(testIndex.getIndex('books')).not.toBeUndefined();
+            expect(testIndex.searchIndex('books','')).toEqual({ });
+           // expect(testIndex.getIndex('books1')).toBeUndefined();
+           // expect(testIndex.getIndex('books')).not.toBeUndefined();
         });
         it('finds the correct index for a word', () => {
-            expect(testIndex.searchIndex('alice')).toBe({
+            expect(testIndex.searchIndex('books','alice')).toEqual({
                 alice: ['0']
             });
         });
