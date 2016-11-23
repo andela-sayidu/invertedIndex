@@ -19,7 +19,7 @@ class invertedIndex {
    */
   sanitize(indexes) {
     return indexes.map(word => word.toLowerCase()
-      .replace(/[!''@#$%^&*,'.]/g, ""));
+      .replace(/[!''@#$%^&*,'.]/g, ''));
   }
 
   /**
@@ -27,7 +27,7 @@ class invertedIndex {
    * @function
    * @param {String} fileName-Uploaded file
    * @param {String} fileContent- Contents of the Json file.
-   * @return {Array} returns filename, merged and sanitized contents of the json file
+   * @return {Array} filename,merged & sanitized contents of the Json file
    */
   createIndex(fileName, fileContent) {
     const completeIndex = [];
