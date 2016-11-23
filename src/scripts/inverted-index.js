@@ -74,11 +74,11 @@ class invertedIndex {
     let sanitizeQuery = this.sanitize(query);
     var result = this.indexMap;
 
-    sanitizeQuery.forEach((term) => {
-      if (result[fileName][term]) {
-        searchResult[term] = result[fileName][term];
-      }
-    });
+      sanitizeQuery.forEach((term) => {
+       if (result[fileName][term]) {
+          searchResult[term] = result[fileName][term];
+       }
+     });
 
     return searchResult;
   }

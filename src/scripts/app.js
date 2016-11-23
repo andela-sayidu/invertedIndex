@@ -38,11 +38,17 @@ app.controller('indexController', ($scope) => {
     }
   }
 
+
   $scope.search = () => {
     $scope.showTable= false;
     $scope.searchResults = true;
     let searchValue = $scope.terms;
-    $scope.searchResult = index.searchIndex($scope.selectedFile,searchValue);
+    let fileSearch =  $scope.selectedFile;
+     if(fileName == 'all') {
+       //  showTable
+     } else{
+       $scope.searchResult = index.searchIndex(fileSearch,searchValue);
+     }
   }
 
 });
