@@ -33,11 +33,11 @@ class invertedIndex {
     const completeIndex = [];
     for (let value of fileContent) {
       const title = value.title;
+      const splitTitle = title.split(' ');
       const text = value.text;
-      const mergeWords = title.concat(text);
-      const wordsArray = mergeWords.split(' ');
-      this._sanitize(wordsArray);
-      completeIndex.push(wordsArray);
+      const splitText = text.split(' ');
+      const mergeWords = splitText.concat(splitTitle);
+      completeIndex.push(this._sanitize(mergeWords));
     }
     this._storeIndex(fileName, completeIndex);
     return [fileName, completeIndex];

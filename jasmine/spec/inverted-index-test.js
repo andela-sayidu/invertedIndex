@@ -18,10 +18,10 @@ describe('Inverted Index TestSuite', () => {
 
     describe('Sanitize', function () {
         it('return an array with sanitized tokens', () => {
-            expect(testIndex.sanitize((books[0].title).split(' '))).toEqual(['alice', 'in', 'wonderland']);
+            expect(testIndex._sanitize((books[0].title).split(' '))).toEqual(['alice', 'in', 'wonderland']);
         });
         it('filters out symbols', function () {
-            expect(testIndex.sanitize(['a&lice', 'i*n', 'wonderl@.and'])).toEqual(['alice', 'in', 'wonderland']);
+            expect(testIndex._sanitize(['a&lice', 'i*n', 'wonderl@.and'])).toEqual(['alice', 'in', 'wonderland']);
         });
     });
 
@@ -43,7 +43,7 @@ describe('Inverted Index TestSuite', () => {
             ]]);
         });
         it('verifies that the index maps strings to the correct Json objects in the array', () => {
-            expect(testIndex.storeIndex('books', [
+            expect(testIndex._storeIndex('books', [
                 ['alice', 'a']
             ])).toEqual({
                 alice: ['0'],
