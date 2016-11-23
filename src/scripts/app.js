@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .addEventListener('change', function (e) {
       let fileContent = e.target.files[0];
       let fileName = e.target.files[0].name;
-      angular.element(document.getElementById('uploadJSON')).scope().uploadFile(fileName, fileContent);
+      angular.element(document.getElementById('uploadJSON'))
+              .scope().uploadFile(fileName, fileContent);
     });
 });
