@@ -15,10 +15,10 @@ var browser = browserSync.create();
 //ESLint task
 gulp.task('eslint', function () {
     return gulp.src('src/**').pipe(eslint({
-        'rules': {
-            'quotes': [1, 'single']
-        }
-    }))
+            'rules': {
+                'quotes': [1, 'single']
+            }
+        }))
         .pipe(eslint.format())
         .pipe(eslint.failOnError());
 });
@@ -31,7 +31,7 @@ gulp.task('syncApp', function () {
             baseDir: './src'
         }
     });
-    gulp.watch("src/*.{html,/*.js,/*.css}").on('change', browser.reload);
+    gulp.watch("src/*.{html,/*.css}").on('change', browser.reload);
 });
 
 gulp.task('tests', function () {
@@ -40,19 +40,21 @@ gulp.task('tests', function () {
             baseDir: './src'
         }
     });
-    gulp.watch('./jasmine/spec/inverted-index-test..js').on('change', browser.reload);
-    gulp.watch('./src/scripts/inverted-index-test..js').on('change', browser.reload);
+    gulp.watch('./jasmine/spec/inverted-index-test.js').on('change', browser.reload);
+    gulp.watch('./src/scripts/inverted-index.js').on('change', browser.reload);
 });
 
 
 gulp.task('browserify', () =>
     browserify('./jasmine/spec/inverted-index-test.js')
-        .bundle()
-        .pipe(source('app-test.js'))
-        .pipe(gulp.dest('./jasmine/spec'))
+    .bundle()
+    .pipe(source('app-test.js'))
+    .pipe(gulp.dest('./jasmine/spec'))
+    .on('error', function (err) {
+        this.emit('end');
+    });
 );
 
 gulp.task('testApp', ['browserify'], () => {
     gulprun('karma start karma.conf.js --single-run').exec();
 });
-
