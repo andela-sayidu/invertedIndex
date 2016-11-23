@@ -50,9 +50,6 @@ gulp.task('browserify', () =>
     .bundle()
     .pipe(source('app-test.js'))
     .pipe(gulp.dest('./jasmine/spec'))
-    .on('error', function (err) {
-        this.emit('end');
-    });
 );
 
 gulp.task('testApp', ['browserify'], () => {
