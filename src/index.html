@@ -81,7 +81,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="(key, value) in data">
+          <tr ng-repeat="(key, value) in filedata">
             <td class="divider"> {{key}}</td>
             <td ng-repeat="fileNo in docCount">
               <i ng-if="value.includes(fileNo.toString())" class="material-icons">clear</i>

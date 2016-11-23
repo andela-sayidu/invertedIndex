@@ -11,14 +11,15 @@ app.controller('indexController', ($scope) => {
    * Upload a file
    */
   $scope.uploadFile = (fileName, fileContent) => {
-    $scope.data = {};
+    $scope.filedata = {};
     $scope.docCount = [];
+
     if (fileName.toLowerCase().match(/\.json$/)) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        let content = JSON.parse(e.target.result);
+        const content = JSON.parse(e.target.result);
         index.createIndex(fileName, content);
-        $scope.data = index.indexMap[fileName];
+        $scope.filedata = index.indexMap[fileName];
         for (let fileNo = 0; fileNo < content.length; fileNo++) {
           $scope.docCount.push(fileNo);
         }
@@ -42,7 +43,7 @@ app.controller('indexController', ($scope) => {
     $scope.showTable = true;
     $scope.searchResults = false;
     let fileSearch = $scope.selectedFile;
-    $scope.data = index.getIndex(fileSearch);
+    $scope.filedata = index.getIndex(fileSearch);
   }
 
   /*
@@ -74,6 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
       let fileContent = e.target.files[0];
       let fileName = e.target.files[0].name;
       angular.element(document.getElementById('uploadJSON'))
-              .scope().uploadFile(fileName, fileContent);
+        .scope().uploadFile(fileName, fileContent);
     });
 });
+
+function checkFileFormat(file) {
+  if (file.hasOwnProperty("title") || file.hasOwnProperty("text")) {
+    return true;
+  } else {
+    return false;
+  }
+}

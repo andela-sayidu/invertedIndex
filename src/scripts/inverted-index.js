@@ -17,7 +17,7 @@ class invertedIndex {
    * @param {String} indexes - String to sanitize
    * @return {Array} array of words without special characters or symbols.
    */
-  sanitize(indexes) {
+  _sanitize(indexes) {
     return indexes.map(word => word.toLowerCase()
       .replace(/[!''@#$%^&*,'.]/g, ''));
   }
@@ -33,17 +33,13 @@ class invertedIndex {
     const completeIndex = [];
     for (let value of fileContent) {
       const title = value.title;
-      const splitTitle = title.split(' ');
-      const textTitle = this.sanitize(splitTitle);
-
       const text = value.text;
-      const splitText = text.split(' ');
-      const content = this.sanitize(splitText);
-
-      const mergeWords = content.concat(textTitle);
-      completeIndex.push(mergeWords);
+      const mergeWords = title.concat(text);
+      const wordsArray = mergeWords.split(' ')
+      this._sanitize(wordsArray);
+      completeIndex.push(wordsArray);
     }
-    this.storeIndex(fileName, completeIndex);
+    this._storeIndex(fileName, completeIndex);
     return [fileName, completeIndex];
   }
 
@@ -55,21 +51,22 @@ class invertedIndex {
    * @param {String} fileContents
    * @return {Array} stores fileName and fileContent in the indexMap
    */
-  storeIndex(textTitle, completeIndex) {
-    const words = {};
+  _storeIndex(textTitle, completeIndex) {
 
+    const wordIndex = {};
     for (let pos in completeIndex) {
       completeIndex[pos].forEach((word) => {
-        if (words[word]) {
-          if (words[word].indexOf(pos) === -1) {
-            words[word].push(pos);
+        if (wordIndex[word]) {
+          if (wordIndex[word].indexOf(pos) === -1) {
+            wordIndex[word].push(pos);
           }
         } else {
-          words[word] = [pos];
+          wordIndex[word] = [pos];
         }
       });
     }
-    return this.indexMap[textTitle] = words;
+      console.log(textTitle,wordIndex);
+    return this.indexMap[textTitle] = wordIndex;
   }
 
   /**
@@ -92,9 +89,9 @@ class invertedIndex {
    */
   searchIndex(fileName, terms) {
     const searchResult = {};
-    let query = terms.split(' ');
-    let sanitizeQuery = this.sanitize(query);
-    var result = this.indexMap;
+    const query = terms.split(' ');
+    const sanitizeQuery = this._sanitize(query);
+    const result = this.indexMap;
 
     sanitizeQuery.forEach((term) => {
       if (result[fileName][term]) {
