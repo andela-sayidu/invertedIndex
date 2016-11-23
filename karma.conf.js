@@ -1,22 +1,20 @@
 // Karma configuration
-// Generated on Sun Nov 13 2016 12:04:11 GMT+0100 (WAT)
-
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    // base path tells Karma where to load
-    basePath: './spec/inverted-index-test.js',
+    basePath: '',
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine','browserify'],
 
 
     // list of files / patterns to load in the browser
-    files: ['src/inverted-index.js',
-      'spec/tests/app-test.js'
+    files: [
+      'src/scripts/inverted-index.js',
+      'jasmine/spec/app-test.js'
     ],
 
 
@@ -28,18 +26,25 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      // './src/inverted-index.js': ['coverage']
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      'src/scripts/inverted-index.js': ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage',],
 
+    coverageReporter: {
+      type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
+      dir: 'coverage/'
+    },
 
     // web server port
-    port: 3000,
+    port: 9876,
 
 
     // enable / disable colors in the output (reporters and logs)
@@ -66,6 +71,13 @@ module.exports = function (config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
-  });
+    concurrency: Infinity,
+
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    }
+  })
 }

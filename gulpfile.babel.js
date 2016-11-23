@@ -53,6 +53,6 @@ gulp.task('browserify', () =>
 );
 
 gulp.task('testApp', ['browserify'], () => {
-    gulprun('karma start ./karma.conf.js --single-run').exec();
+    gulprun('karma start karma.conf.js --single-run').exec();
 });
 
