@@ -8,8 +8,8 @@ app.controller('indexController', ($scope) => {
   $scope.titles = [];
 
   /*
-  * Upload a file
-  */
+   * Upload a file
+   */
   $scope.uploadFile = (fileName, fileContent) => {
     $scope.data = {};
     $scope.docCount = [];
@@ -36,8 +36,8 @@ app.controller('indexController', ($scope) => {
   }
 
   /*
-  * Generate Index for a file
-  */
+   * Generate Index for a file
+   */
   $scope.createIndex = () => {
     $scope.showTable = true;
     $scope.searchResults = false;
@@ -46,8 +46,8 @@ app.controller('indexController', ($scope) => {
   }
 
   /*
-  * Search Files for specific terms
-  */
+   * Search Files for specific terms
+   */
   $scope.search = () => {
     $scope.showTable = false;
     $scope.searchResults = true;

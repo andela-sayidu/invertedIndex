@@ -1,32 +1,32 @@
 /**
-* InvertedIndex Class
-* @class
-*/
+ * InvertedIndex Class
+ * @class
+ */
 class invertedIndex {
   /**
-  * class constructor
-  * @constructor
-  */
+   * class constructor
+   * @constructor
+   */
   constructor() {
     this.indexMap = {};
   }
 
   /**
-  * Sanitizes text by removing invalid symbols.
-  * @function
-  * @param {String} indexes - String to sanitize
-  * @return {Array} array of words without special characters or symbols.
-  */
+   * Sanitizes text by removing invalid symbols.
+   * @function
+   * @param {String} indexes - String to sanitize
+   * @return {Array} array of words without special characters or symbols.
+   */
   sanitize(indexes) {
     return indexes.map(word => word.toLowerCase().replace(/[!''@#$%^&*,'.]/g, ""));
   }
 
-	/**
-	* Create File Index
-  * @function
-  * @param {String} fileName-Uploaded file;fileContent- Contents of the Json file.
-  * @return {Array} returns filename, merged and sanitized contents of the json file
-  */
+  /**
+   * Create File Index
+   * @function
+   * @param {String} fileName-Uploaded file;fileContent- Contents of the Json file.
+   * @return {Array} returns filename, merged and sanitized contents of the json file
+   */
   createIndex(fileName, fileContent) {
     const completeIndex = [];
     for (let value of fileContent) {
@@ -46,12 +46,12 @@ class invertedIndex {
   }
 
 
-	/**
-	* Stores the File Index
-	* @function
-  * @param {String,String} fileName, fileContents
-  * @return {Array} stores fileName and fileContent in the indexMap
-  */
+  /**
+   * Stores the File Index
+   * @function
+   * @param {String,String} fileName, fileContents
+   * @return {Array} stores fileName and fileContent in the indexMap
+   */
   storeIndex(textTitle, completeIndex) {
     const words = {}
 
@@ -69,23 +69,23 @@ class invertedIndex {
     return this.indexMap[textTitle] = words;
   }
 
-	/**
-	* Get File Index
-	* @function
-  * @param {String} fileName
-  * @return {Object} returns file contents
-  */
+  /**
+   * Get File Index
+   * @function
+   * @param {String} fileName
+   * @return {Object} returns file contents
+   */
   getIndex(fileName) {
     return this.indexMap[fileName];
   }
 
 
-	/**
-	 * Search Index
-	* @function
-  * @param {String,String} fileName/title to searched
-  * @return {Object} returns search results
-  */
+  /**
+   * Search Index
+   * @function
+   * @param {String,String} fileName/title to searched
+   * @return {Object} returns search results
+   */
   searchIndex(fileName, terms) {
     const searchResult = {};
     let query = terms.split(' ');
@@ -100,4 +100,3 @@ class invertedIndex {
     return searchResult;
   }
 }
-
