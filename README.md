@@ -10,11 +10,11 @@ Elasticsearch uses a structure called an inverted index, which is designed to al
 
 ```
 [
-    {"title": "Rea",
-    "text":"You will be asked to enter your Heroku credentials the first time you run a command; after the first time, your email address and an API token will be saved"
+    {"title": "Required",
+    "text":"Do include some content on the subject matter."
     },
-    {"title": "Coveralls",
-    "text": "See the latest code-coverage statistics on all of your repositories including the total percentages covered and the lines covered."
+    {"title": "eg. Checkpoint 1",
+    "text": "This Checkpoint is called inverted Index."
     }
 ]
 ```
@@ -27,7 +27,6 @@ Elasticsearch uses a structure called an inverted index, which is designed to al
 
 You may clone the repository and run the app locally to use.
 
-Alternatively???
 
 
 ## Technologies
