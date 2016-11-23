@@ -56,12 +56,14 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
 
 
-    // enable / disable watching file and executing tests whenever any file changes
+    // enable / disable watching file and executing tests
+    // whenever any file changes
     autoWatch: true,
 
 
     // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    // available browser launchers:
+    //https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
 
 
@@ -79,5 +81,5 @@ module.exports = function(config) {
         flags: ['--no-sandbox']
       }
     }
-  })
+  });
 }
