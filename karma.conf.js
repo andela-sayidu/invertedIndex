@@ -1,5 +1,5 @@
 // Karma configuration
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -8,7 +8,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine','browserify'],
+    frameworks: ['jasmine', 'browserify'],
 
 
     // list of files / patterns to load in the browser
@@ -17,10 +17,12 @@ module.exports = function(config) {
       'jasmine/spec/app-test.js'
     ],
 
-
-    // list of files to exclude
-    exclude: [
+    plugins: [
+      'karma-jasmine',
+      'karma-coverage'
     ],
+    // list of files to exclude
+    exclude: [],
 
 
     // preprocess matching files before serving them to the browser
@@ -36,7 +38,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage',],
+    reporters: ['progress', 'coverage', ],
 
     coverageReporter: {
       type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
