@@ -7,6 +7,9 @@ app.controller('indexController', ($scope) => {
   $scope.searchResults = false;
   $scope.titles = [];
 
+  /*
+  * Upload a file
+  */
   $scope.uploadFile = (fileName, fileContent) => {
     $scope.data = {};
     $scope.docCount = [];
@@ -16,21 +19,15 @@ app.controller('indexController', ($scope) => {
         let content = JSON.parse(e.target.result);
         index.createIndex(fileName, content);
         $scope.data = index.indexMap[fileName];
-
         for (let fileNo = 0; fileNo < content.length; fileNo++) {
           $scope.docCount.push(fileNo);
         }
-
         $scope.$apply($scope.docCount);
-
       }
       reader.readAsText(fileContent);
-
       $scope.$apply(() => {
         $scope.titles.push(fileName);
-        $scope.selectedFiles = $scope.selectedFile;
       });
-
     } else {
       $(document).ready(function () {
         $('#modal1').modal('open');
@@ -38,26 +35,40 @@ app.controller('indexController', ($scope) => {
     }
   }
 
-
-  $scope.search = () => {
-    $scope.showTable= false;
-    $scope.searchResults = true;
-    let searchValue = $scope.terms;
-    let fileSearch =  $scope.selectedFile;
-     if(fileName == 'all') {
-       //  showTable
-     } else{
-       $scope.searchResult = index.searchIndex(fileSearch,searchValue);
-     }
+  /*
+  * Generate Index for a file
+  */
+  $scope.createIndex = () => {
+    $scope.showTable = true;
+    $scope.searchResults = false;
+    let fileSearch = $scope.selectedFile;
+    $scope.data = index.getIndex(fileSearch);
   }
 
+  /*
+  * Search Files for specific terms
+  */
+  $scope.search = () => {
+    $scope.showTable = false;
+    $scope.searchResults = true;
+    let searchValue = $scope.terms;
+    if (searchValue == '') {
+      $scope.showTable = true;
+      $scope.searchResults = false;
+    } else {
+      let fileSearch = $scope.selectedFile;
+      $scope.searchResult = index.searchIndex(fileSearch, searchValue);
+    }
+  }
 });
 
 
-
+//document DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  //Manage Modal
   $('.modal-trigger').hide();
   $('.modal').modal();
+  //Attach eventlistener to file upload button
   document.getElementById('uploadJSON')
     .addEventListener('change', function (e) {
       let fileContent = e.target.files[0];
