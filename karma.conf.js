@@ -1,5 +1,6 @@
 // Karma configuration
-module.exports = function (config) {
+// Generated on Thu Nov 24 2016 00:04:01 GMT+0100 (WAT)
+module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -8,21 +9,18 @@ module.exports = function (config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'browserify'],
-
+    frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
-      'src/scripts/inverted-index.js',
-      'jasmine/spec/app-test.js'
+      '/src/scripts/inverted-index.js',
+      '/jasmine/spec/inverted-index-test.js'
     ],
 
-    plugins: [
-      'karma-jasmine',
-      'karma-coverage'
-    ],
+
     // list of files to exclude
-    exclude: [],
+    exclude: [
+    ],
 
 
     // preprocess matching files before serving them to the browser
@@ -31,14 +29,14 @@ module.exports = function (config) {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'src/scripts/inverted-index.js': ['coverage']
+      'src/inverted-index.js': ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage', ],
+    reporters: ['progress', 'coverage',],
 
     coverageReporter: {
       type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
@@ -58,14 +56,12 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
 
 
-    // enable / disable watching file and executing tests
-    // whenever any file changes
+    // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
 
     // start these browsers
-    // available browser launchers:
-    //https://npmjs.org/browse/keyword/karma-launcher
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
 
 
@@ -83,5 +79,5 @@ module.exports = function (config) {
         flags: ['--no-sandbox']
       }
     }
-  });
+  })
 }
