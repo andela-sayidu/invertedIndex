@@ -78,11 +78,3 @@ document.addEventListener('DOMContentLoaded', () => {
         .scope().uploadFile(fileName, fileContent);
     });
 });
-
-function checkFileFormat(file) {
-  if (file.hasOwnProperty("title") || file.hasOwnProperty("text")) {
-    return true;
-  } else {
-    return false;
-  }
-}

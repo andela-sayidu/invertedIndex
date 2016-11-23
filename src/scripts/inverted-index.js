@@ -35,7 +35,7 @@ class invertedIndex {
       const title = value.title;
       const text = value.text;
       const mergeWords = title.concat(text);
-      const wordsArray = mergeWords.split(' ')
+      const wordsArray = mergeWords.split(' ');
       this._sanitize(wordsArray);
       completeIndex.push(wordsArray);
     }
@@ -65,7 +65,6 @@ class invertedIndex {
         }
       });
     }
-      console.log(textTitle,wordIndex);
     return this.indexMap[textTitle] = wordIndex;
   }
 
