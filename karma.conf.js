@@ -1,21 +1,28 @@
-// Karma configuration
-// Generated on Thu Nov 24 2016 00:04:01 GMT+0100 (WAT)
+
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: "",
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ["jasmine"],
+
 
     // list of files / patterns to load in the browser
     files: [
-      'src/scripts/inverted-index.js',
-      'jasmine/spec/app-test.js'
+      "jasmine/spec/app-test.js",
+      "src/scripts/inverted-index.js"
     ],
+
+    customLaunchers: {
+      Chrome_travis_ci: {
+      base: "Chrome",
+        flags: ["--no-sandbox"]
+      }
+    },
 
 
     // list of files to exclude
@@ -26,21 +33,18 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      // source files, that you wanna generate coverage for
-      // do not include tests or libraries
-      // (these files will be instrumented by Istanbul)
-      'src/inverted-index.js': 'coverage'
+      "src/scripts/inverted-index.js": "coverage"
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage', 'coveralls'],
+    reporters: ["progress", "coverage", "coveralls"],
 
     coverageReporter: {
-      type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
-      dir: 'coverage/'
+      type: "lcov",
+      dir: "coverage/"
     },
 
     // web server port
@@ -62,7 +66,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: process.env.TRAVIS ? ["Chrome_travis_ci"] : ["Chrome"],
 
 
     // Continuous Integration mode
@@ -71,13 +75,6 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity,
-
-    customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    }
-  })
-}
+    concurrency: Infinity
+  });
+};

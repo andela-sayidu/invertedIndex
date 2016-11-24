@@ -12,18 +12,6 @@ import gulprun from 'gulp-run';
 
 var browser = browserSync.create();
 
-//ESLint task
-gulp.task('eslint', function () {
-    return gulp.src('src/**').pipe(eslint({
-            'rules': {
-                'quotes': [1, 'single']
-            }
-        }))
-        .pipe(eslint.format())
-        .pipe(eslint.failOnError());
-});
-
-
 //Browser Test
 gulp.task('syncApp', function () {
     browser.init({
@@ -32,13 +20,9 @@ gulp.task('syncApp', function () {
         }
     });
     gulp.watch("src/*.{html,/*.css}").on('change', browser.reload);
-});
-
-gulp.task('tests', function () {
     gulp.watch('./jasmine/spec/inverted-index-test.js').on('change', browser.reload);
     gulp.watch('../../src/scripts/inverted-index.js').on('change', browser.reload);
 });
-
 
 gulp.task('browserify', () =>
     browserify('./jasmine/spec/inverted-index-test.js')
