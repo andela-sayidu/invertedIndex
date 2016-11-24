@@ -18,6 +18,11 @@ app.controller('indexController', ($scope) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = JSON.parse(e.target.result);
+        if (!(content[0] && content[0].title)) {
+          $(document).ready(function () {
+            $('#modal1').modal('open');
+          });
+        }
         index.createIndex(fileName, content);
         $scope.filedata = index.indexMap[fileName];
         for (let fileNo = 0; fileNo < content.length; fileNo++) {
