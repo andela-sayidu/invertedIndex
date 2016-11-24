@@ -49,12 +49,6 @@ app.controller('indexController', ($scope) => {
     $scope.searchResults = false;
     let fileSearch = $scope.selectedFile;
     $scope.filedata = index.getIndex(fileSearch);
-    if (fileSearch == 'all') {
-      console.log(fileSearch);
-      for (title in $scope.titles) {
-        $scope.searchResult = index.searchIndex(title, searchValue);
-      }
-    }
   }
 
   /*
