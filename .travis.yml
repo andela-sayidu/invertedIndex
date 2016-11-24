@@ -1,6 +1,6 @@
+sudo: required
+dist: trusty
 language: node_js
-node_js:
-    - node_js
 before_install:
  - export CHROME_BIN=/usr/bin/google-chrome
  - export DISPLAY=:99.0
