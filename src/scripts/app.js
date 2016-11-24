@@ -44,6 +44,12 @@ app.controller('indexController', ($scope) => {
     $scope.searchResults = false;
     let fileSearch = $scope.selectedFile;
     $scope.filedata = index.getIndex(fileSearch);
+    if (fileSearch == 'all') {
+      console.log(fileSearch);
+      for (title in $scope.titles) {
+        $scope.searchResult = index.searchIndex(title, searchValue);
+      }
+    }
   }
 
   /*
@@ -53,11 +59,12 @@ app.controller('indexController', ($scope) => {
     $scope.showTable = false;
     $scope.searchResults = true;
     let searchValue = $scope.terms;
+    let fileSearch = $scope.selectedFile;
+
     if (searchValue == '') {
       $scope.showTable = true;
       $scope.searchResults = false;
     } else {
-      let fileSearch = $scope.selectedFile;
       $scope.searchResult = index.searchIndex(fileSearch, searchValue);
     }
   }

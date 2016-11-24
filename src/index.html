@@ -91,7 +91,7 @@
       </table>
     </div>
     <div class="col s8 m8 l8">
-      <table ng-show="searchResults">
+      <table ng-show="searchResults" ng-repeat="title in titles">
         <thead>
           <th> Search Results for {{selectedFile}}</th>
           <tr>

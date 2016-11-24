@@ -4,7 +4,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: './src',
+    basePath: '',
 
 
     // frameworks to use
@@ -13,8 +13,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './scripts/inverted-index.js',
-      '../jasmine/spec/app-test.js'
+      'src/scripts/inverted-index.js',
+      'jasmine/spec/app-test.js'
     ],
 
 
@@ -29,14 +29,14 @@ module.exports = function(config) {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'src/inverted-index.js': ['coverage']
+      'src/inverted-index.js': 'coverage'
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage',],
+    reporters: ['progress', 'coverage', 'coveralls'],
 
     coverageReporter: {
       type: 'lcov', // lcov or lcovonly are required for generating lcov.info files

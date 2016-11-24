@@ -8,11 +8,6 @@ module.exports=[
   {
     "title": "The Lord of the Rings: The Fellowship of the Ring.",
     "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-  },
-
-  {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
   }
 ]
 
@@ -20,35 +15,41 @@ module.exports=[
 'use strict'
 
 const books = require('./books.json');
-const testIndex = new invertedIndex();
+let invertIndex, index;
 
 describe('Inverted Index TestSuite', () => {
+
+    beforeEach(() => {
+        invertIndex = new invertedIndex();
+        index = invertIndex.createIndex('books', books);
+    });
+
     describe('Inverted Index Class', () => {
         it('should be a class', () => {
-            expect(testIndex instanceof invertedIndex).toBe(true);
-            expect(testIndex instanceof Object).toBe(true);
-            expect(typeof (testIndex)).toBe('object');
+            expect(invertIndex instanceof invertedIndex).toBe(true);
+            expect(invertIndex instanceof Object).toBe(true);
+            expect(typeof (invertIndex)).toBe('object');
         });
 
         it('checks for default indexMap', () => {
-            expect(typeof (testIndex.indexMap)).toBe('object');
+            expect(typeof (invertIndex.indexMap)).toBe('object');
         });
     });
 
+
     describe('Sanitize', function () {
         it('return an array with sanitized tokens', () => {
-            expect(testIndex._sanitize((books[0].title).split(' '))).toEqual(['alice', 'in', 'wonderland']);
+            expect(invertIndex._sanitize(books[0].title.split(' '))).toEqual(['alice', 'in', 'wonderland']);
         });
         it('filters out symbols', function () {
-            expect(testIndex._sanitize(['a&lice', 'i*n', 'wonderl@.and'])).toEqual(['alice', 'in', 'wonderland']);
+            expect(invertIndex._sanitize(['a&lice', 'i*n', 'wonderl@.and'])).toEqual(['alice', 'in', 'wonderland']);
         });
     });
 
     describe('Read Book Data', () => {
         it('ensures that JSON file is not empty', () => {
-            expect(books.length > 0).toBe(true);
+            expect(index.length > 0).toBe(true);
         });
-
     });
 
     describe('Create and Populate Index', () => {
@@ -57,12 +58,12 @@ describe('Inverted Index TestSuite', () => {
             "text": "Alice."
         }];
         it('verifies that the JSON has been read', () => {
-            expect(testIndex.createIndex('books', minibooks)).toEqual(['books', [
+            expect(invertIndex.createIndex('books', minibooks)).toEqual(['books', [
                 ['alice', 'a']
             ]]);
         });
         it('verifies that the index maps strings to the correct Json objects in the array', () => {
-            expect(testIndex._storeIndex('books', [
+            expect(invertIndex._storeIndex('books', [
                 ['alice', 'a']
             ])).toEqual({
                 alice: ['0'],
@@ -73,19 +74,18 @@ describe('Inverted Index TestSuite', () => {
 
     describe('Get Index', () => {
         it('gets a particular index', () => {
-            var index = testIndex.getIndex('books');
-            expect(index.a).toEqual(['0']);
-            expect(index.alice).toEqual(['0']);
+            expect(invertIndex.getIndex('books').a).toEqual(['0','1']);
+            expect(invertIndex.getIndex('books').alice).toEqual(['0']);
         });
     });
 
 
     describe('Search Index', () => {
         it('searches for only valid titles', () => {
-            expect(testIndex.searchIndex('books','')).toEqual({ });
+            expect(invertIndex.searchIndex('books', '')).toEqual({});
         });
         it('finds the correct index for a word', () => {
-            expect(testIndex.searchIndex('books','alice')).toEqual({
+            expect(invertIndex.searchIndex('books', 'alice')).toEqual({
                 alice: ['0']
             });
         });

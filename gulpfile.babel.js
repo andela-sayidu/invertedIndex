@@ -35,13 +35,8 @@ gulp.task('syncApp', function () {
 });
 
 gulp.task('tests', function () {
-    browser.init({
-        server: {
-            baseDir: './src'
-        }
-    });
     gulp.watch('./jasmine/spec/inverted-index-test.js').on('change', browser.reload);
-    gulp.watch('./src/scripts/inverted-index.js').on('change', browser.reload);
+    gulp.watch('../../src/scripts/inverted-index.js').on('change', browser.reload);
 });
 
 
@@ -53,5 +48,5 @@ gulp.task('browserify', () =>
 );
 
 gulp.task('testApp', ['browserify'], () => {
-    gulprun('karma start karma.conf.js --single-run').exec();
+    gulprun('node_modules/karma/bin/karma start karma.conf.js --single-run').exec();
 });
