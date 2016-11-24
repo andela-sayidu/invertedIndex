@@ -1,5 +1,4 @@
-https://travis-ci.org/andela-sayidu/invertedIndex.svg?branch=feature%2FSearchallfiles
-[![Coverage Status](https://coveralls.io/repos/github/andela-sayidu/invertedIndex/badge.svg)](https://coveralls.io/github/andela-sayidu/invertedIndex)
+[![Build Status](https://travis-ci.org/andela-sayidu/invertedIndex.svg?branch=feature%2FSearchallfiles)](https://travis-ci.org/andela-sayidu/invertedIndex)[![Coverage Status](https://coveralls.io/repos/github/andela-sayidu/invertedIndex/badge.svg)](https://coveralls.io/github/andela-sayidu/invertedIndex)
 
 # Inverted Index
 ## Introduction
