@@ -20,8 +20,13 @@ gulp.task('syncApp', function () {
         }
     });
     gulp.watch("src/*.{html,/*.css}").on('change', browser.reload);
-    gulp.watch('jasmine/spec/inverted-index-test.js').on('change', browser.reload);
     gulp.watch('../../src/scripts/inverted-index.js').on('change', browser.reload);
+});
+
+
+gulp.task('testWatch', () => {
+    gulp.watch('jasmine/spec/*').on('change', browser.reload);
+    gulp.watch('jasmine/spec/inverted-index-test.js', ['browserify']);
 });
 
 gulp.task('browserify', () =>
@@ -31,6 +36,5 @@ gulp.task('browserify', () =>
     .pipe(gulp.dest('./jasmine/spec'))
 );
 
-gulp.task('testApp', ['browserify'], () => {
-    gulprun('karma start karma.conf.js --single-run').exec();
-});
+
+gulp.task('loadApp', ['syncApp', 'testWatch'])
