@@ -8,8 +8,9 @@ app.controller('indexController', ($scope) => {
   $scope.titles = [];
 
   /*
-   * Upload a file
+   * Upload a valid JSON file
    */
+
   $scope.uploadFile = (fileName, fileContent) => {
     if (fileName.toLowerCase().match(/\.json$/)) {
       const reader = new FileReader();
@@ -29,11 +30,12 @@ app.controller('indexController', ($scope) => {
       }
       reader.readAsText(fileContent);
     }
-  }
+  };
 
   /*
-   * Generate Index for a file
+   * Generates Index for a uploaded file
    */
+
   $scope.createIndex = () => {
     $scope.showTable = true;
     $scope.searchResults = false;
@@ -48,7 +50,7 @@ app.controller('indexController', ($scope) => {
     if (fileSearch == undefined) {
       status('Error! No file selected');
       return;
-    }
+    };
 
     $scope.filedata = index.indexMap[fileSearch];
 
@@ -67,6 +69,7 @@ app.controller('indexController', ($scope) => {
   /*
    * Search Files for specific terms
    */
+
   $scope.search = () => {
     $scope.showTable = false;
     $scope.searchResults = true;
@@ -77,8 +80,7 @@ app.controller('indexController', ($scope) => {
       status('Enter at least a term');
     }
     $scope.searchResult = index.searchIndex(fileSearch, searchValue);
-    console.log($scope.searchResult);
-  }
+  };
 
   /*
    * Modal Setup
@@ -91,9 +93,10 @@ app.controller('indexController', ($scope) => {
 });
 
 
-//document DOM is loaded
+/*
+ * File Upload
+ */
 document.addEventListener('DOMContentLoaded', () => {
-  //Attach eventlistener to file upload button
   document.getElementById('uploadJSON')
     .addEventListener('change', (e) => {
       let fileContent = e.target.files[0];

@@ -1,12 +1,16 @@
 'use strict'
 
 const books = require('./books.json');
+const music = require('./music.json');
+
 let invertIndex, index;
+
 
 describe('Inverted Index TestSuite', () => {
     beforeEach(() => {
         invertIndex = new InvertedIndex();
         index = invertIndex.createIndex('books', books);
+        index = invertIndex.createIndex('music', music);
     });
 
     describe('Sanitize', () => {
@@ -20,43 +24,62 @@ describe('Inverted Index TestSuite', () => {
 
     describe('Read Book Data', () => {
         it('ensures that JSON file is not empty', () => {
-            expect(index.length > 0).toBe(true);
+            expect(invertIndex.indexMap.hasOwnProperty('books')).toBe(true);
+        });
+        it('verifies that the file content is a JSON array', function () {
+            expect(Array.isArray(books)).toBeTruthy();
         });
     });
 
     describe('Create and Populate Index', () => {
         it('verifies that the JSON has been read', () => {
-            expect(invertIndex.createIndex('books', minibooks)).toEqual(['books', [
-                ['alice', 'a']
-            ]]);
+            expect(invertIndex.getIndex('books').hasOwnProperty('alice')).toBeTruthy();
         });
-        it('verifies that the index maps strings to the correct Json objects in the array', () => {
-            expect(invertIndex.storeIndex('books', [
-                ['alice', 'a']
-            ])).toEqual({
-                alice: ['0'],
-                a: ['0']
-            });
+        it('verifies that index maps strings to the correct Json objects', () => {
+            expect(invertIndex.getIndex('books')['alice']).toEqual([0]);;
+            expect(invertIndex.getIndex('music')['a']).toEqual([1]);
+        });
+        it('ensures existing files are not overridden during upload', () => {
+            expect(invertIndex.getIndex('books')).toBeTruthy();
+            expect(invertIndex.getIndex('music')).toBeTruthy();
         });
     });
 
     describe('Get Index', () => {
         it('gets a particular index', () => {
-            expect(invertIndex.getIndex('books').a).toEqual(['0', '1']);
-            expect(invertIndex.getIndex('books').alice).toEqual(['0']);
+            expect(invertIndex.getIndex('books').a).toEqual([0, 1]);
+            expect(invertIndex.getIndex('books').alice).toEqual([0]);
         });
     });
 
 
     describe('Search Index', () => {
-        it('searches for only valid titles', () => {
-            expect(invertIndex.searchIndex('books', '')).toEqual({});
+        it('For non-valid terms returns no index', () => {
+            expect(invertIndex.searchIndex('books', '')).toEqual([{
+                books: {
+                    '': []
+                }
+            }]);
         });
         it('finds the correct index for a word', () => {
-            expect(invertIndex.searchIndex('books', 'alice')).toEqual({
-                alice: ['0']
-            });
+            expect(invertIndex.searchIndex('books', 'alice')).toEqual([{
+                books: {
+                    alice: [0]
+                }
+            }]);
+        });
+        it('find terms in all files  when required', () => {
+            expect(invertIndex.searchIndex('all', 'the wonderland')).toEqual([{
+                books: {
+                    'wonderland': [0],
+                    'the': [1]
+                }
+            }, {
+                music: {
+                    'wonderland': [],
+                    'the': [0, 1]
+                }
+            }]);
         });
     });
-
 });

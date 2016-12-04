@@ -3,6 +3,7 @@
  * @class
  */
 class InvertedIndex {
+
   /**
    * class constructor
    * @constructor
@@ -14,7 +15,7 @@ class InvertedIndex {
   /**
    * Sanitizes text by removing invalid symbols.
    *
-   * @param {String} indexes - String to sanitize
+   * @param {Array} indexes - String to sanitize
    * @return {Array} array of words without special characters or symbols.
    */
   sanitize(indexes) {
@@ -25,13 +26,12 @@ class InvertedIndex {
   /**
    * Create File Index
    *
-   * @param {String} fileName-Uploaded file
-   * @param {String} fileContent- Contents of the Json file.
-   * @return {Array} filename,merged & sanitized contents of the Json file
+   * @param {String} fileName - Uploaded file
+   * @param {String} fileContent - Contents of the Json file.
    */
   createIndex(fileName, fileContent) {
     const completeIndex = [];
-    for (let value of fileContent) {
+    for (const value of fileContent) {
       const title = value.title;
       const text = value.text;
       const mergeWords = title + ' ' + text;
@@ -46,11 +46,10 @@ class InvertedIndex {
    *
    * @param {String} fileName
    * @param {String} fileContents
-   * @return {Array} stores fileName and fileContent in the indexMap
    */
   storeIndex(fileName, completeIndex) {
     const wordIndex = {};
-    for (let pos in completeIndex) {
+    for (const pos in completeIndex) {
       let posToInt = parseInt(pos);
       completeIndex[pos].forEach((word) => {
         if (wordIndex[word]) {
@@ -67,7 +66,7 @@ class InvertedIndex {
 
   /**
    * Get File Index
-   * @function
+   *
    * @param {String} fileName
    * @return {Object} returns file contents
    */
@@ -75,10 +74,8 @@ class InvertedIndex {
     return this.indexMap[fileName];
   }
 
-
-
   /**
-   * Search Index
+   * Search a File
    *
    * @param {String} fileName
    * @param {String} terms
@@ -86,7 +83,6 @@ class InvertedIndex {
    */
   searchaFile(fileName, terms) {
     const searchResult = {};
-    const termsNotFound = [];
     const query = terms.split(' ');
     const sanitizeQuery = this.sanitize(query);
     const allFiles = this.indexMap;
@@ -95,27 +91,31 @@ class InvertedIndex {
     sanitizeQuery.forEach((term) => {
       if (allFiles[fileName][term]) {
         searchResult[fileName][term] = allFiles[fileName][term];
-      }else{
+      } else {
         searchResult[fileName][term] = [];
       }
     });
     return searchResult;
   }
 
-
+  /**
+   * Search Index for 1 or multiple files
+   *
+   * @param {String} fileName
+   * @param {String} terms
+   * @return {Array} returns search results
+   */
   searchIndex(fileName, terms) {
     const searchResult = [];
-    const query = terms.split(' ');
-    const sanitizeQuery = this.sanitize(query);
     const allFiles = this.indexMap;
 
-    if (fileName == 'all') {
-      for (let file in allFiles) {
-        let search = this.searchaFile(file, terms);
+    if (fileName === 'all') {
+      for (const file in allFiles) {
+        const search = this.searchaFile(file, terms);
         searchResult.push(search);
       }
-    }else{
-       let search = this.searchaFile(fileName, terms);
+    } else {
+      const search = this.searchaFile(fileName, terms);
       searchResult.push(search);
     }
     return searchResult;
