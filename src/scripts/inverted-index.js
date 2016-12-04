@@ -2,7 +2,7 @@
  * InvertedIndex Class
  * @class
  */
-class invertedIndex {
+class InvertedIndex {
   /**
    * class constructor
    * @constructor
@@ -13,18 +13,18 @@ class invertedIndex {
 
   /**
    * Sanitizes text by removing invalid symbols.
-   * @function
+   *
    * @param {String} indexes - String to sanitize
    * @return {Array} array of words without special characters or symbols.
    */
-  _sanitize(indexes) {
+  sanitize(indexes) {
     return indexes.map(word => word.toLowerCase()
-      .replace(/[!''@#$%^&*,'.]/g, ''));
+      .replace(/[^A-Za-z0-9]/g, ''));
   }
 
   /**
    * Create File Index
-   * @function
+   *
    * @param {String} fileName-Uploaded file
    * @param {String} fileContent- Contents of the Json file.
    * @return {Array} filename,merged & sanitized contents of the Json file
@@ -33,39 +33,36 @@ class invertedIndex {
     const completeIndex = [];
     for (let value of fileContent) {
       const title = value.title;
-      const splitTitle = title.split(' ');
       const text = value.text;
-      const splitText = text.split(' ');
-      const mergeWords = splitText.concat(splitTitle);
-      completeIndex.push(this._sanitize(mergeWords));
+      const mergeWords = title + ' ' + text;
+      completeIndex.push(this.sanitize(mergeWords.split(' ')));
     }
-    this._storeIndex(fileName, completeIndex);
-    return [fileName, completeIndex];
+    this.storeIndex(fileName, completeIndex);
   }
 
 
   /**
    * Stores the File Index
-   * @function
+   *
    * @param {String} fileName
    * @param {String} fileContents
    * @return {Array} stores fileName and fileContent in the indexMap
    */
-  _storeIndex(textTitle, completeIndex) {
-
+  storeIndex(fileName, completeIndex) {
     const wordIndex = {};
     for (let pos in completeIndex) {
+      let posToInt = parseInt(pos);
       completeIndex[pos].forEach((word) => {
         if (wordIndex[word]) {
-          if (wordIndex[word].indexOf(pos) === -1) {
-            wordIndex[word].push(pos);
+          if (wordIndex[word].indexOf(posToInt) === -1) {
+            wordIndex[word].push(posToInt);
           }
         } else {
-          wordIndex[word] = [pos];
+          wordIndex[word] = [posToInt];
         }
       });
     }
-    return this.indexMap[textTitle] = wordIndex;
+    this.indexMap[fileName] = wordIndex;
   }
 
   /**
@@ -79,24 +76,49 @@ class invertedIndex {
   }
 
 
+
   /**
    * Search Index
-   * @function
+   *
    * @param {String} fileName
    * @param {String} terms
    * @return {Object} returns search results
    */
-  searchIndex(fileName, terms) {
+  searchaFile(fileName, terms) {
     const searchResult = {};
+    const termsNotFound = [];
     const query = terms.split(' ');
-    const sanitizeQuery = this._sanitize(query);
-    const result = this.indexMap;
+    const sanitizeQuery = this.sanitize(query);
+    const allFiles = this.indexMap;
 
+    searchResult[fileName] = {};
     sanitizeQuery.forEach((term) => {
-      if (result[fileName][term]) {
-        searchResult[term] = result[fileName][term];
+      if (allFiles[fileName][term]) {
+        searchResult[fileName][term] = allFiles[fileName][term];
+      }else{
+        searchResult[fileName][term] = [];
       }
     });
     return searchResult;
   }
+
+
+  searchIndex(fileName, terms) {
+    const searchResult = [];
+    const query = terms.split(' ');
+    const sanitizeQuery = this.sanitize(query);
+    const allFiles = this.indexMap;
+
+    if (fileName == 'all') {
+      for (let file in allFiles) {
+        let search = this.searchaFile(file, terms);
+        searchResult.push(search);
+      }
+    }else{
+       let search = this.searchaFile(fileName, terms);
+      searchResult.push(search);
+    }
+    return searchResult;
+  }
+
 }

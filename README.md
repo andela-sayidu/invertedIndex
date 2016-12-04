@@ -28,10 +28,27 @@ Elasticsearch uses a structure called an inverted index, which is designed to al
 
 You may clone the repository and run the app locally to use.
 
-
+## Local Installation Guide
+* Clone the repository
+* Install the dependencies using  `npm install`
+* Run `gulp syncApp` to start the application.
+* The app will start on your local server.
+* Run tests with: `gulp testApp`
 
 ## Technologies
 
 * EchmaScript 6 (JavaScript 2015)
 * Node.js
 * Angular.js
+* Gulp (Task Runner)
+* Karma (Generates Test Coverage Folder)
+
+
+## Contributing
+
+* Fork this repositry to your account.
+* Clone your repositry: git clone git@github.com:your-username/inverted-index.git
+* Create your feature branch: git checkout -b new-feature
+* Commit your changes: git commit -m "did something"
+* Push to the remote branch: git push origin new-feature
+* Open a pull request.

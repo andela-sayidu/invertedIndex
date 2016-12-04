@@ -1,9 +1,9 @@
 const app = angular.module('myIndex', []);
 
 app.controller('indexController', ($scope) => {
-  const index = new invertedIndex();
+  const index = new InvertedIndex();
 
-  $scope.showTable = true;
+  $scope.showTable = false;
   $scope.searchResults = false;
   $scope.titles = [];
 
@@ -11,33 +11,23 @@ app.controller('indexController', ($scope) => {
    * Upload a file
    */
   $scope.uploadFile = (fileName, fileContent) => {
-    $scope.filedata = {};
-    $scope.docCount = [];
-
     if (fileName.toLowerCase().match(/\.json$/)) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const content = JSON.parse(e.target.result);
-        if (!(content[0] && content[0].title)) {
-          $(document).ready(function () {
-            $('#modal1').modal('open');
+        try {
+          $scope.content = JSON.parse(e.target.result);
+          if (!($scope.content[0] && $scope.content[0].title)) {
+            status('Invalid JSON file');
+            return;
+          }
+          $scope.$apply(() => {
+            $scope.titles.push(fileName);
           });
+        } catch (exception) {
+          status('Invalid JSON file');
         }
-        index.createIndex(fileName, content);
-        $scope.filedata = index.indexMap[fileName];
-        for (let fileNo = 0; fileNo < content.length; fileNo++) {
-          $scope.docCount.push(fileNo);
-        }
-        $scope.$apply($scope.docCount);
       }
       reader.readAsText(fileContent);
-      $scope.$apply(() => {
-        $scope.titles.push(fileName);
-      });
-    } else {
-      $(document).ready(function () {
-        $('#modal1').modal('open');
-      });
     }
   }
 
@@ -47,8 +37,31 @@ app.controller('indexController', ($scope) => {
   $scope.createIndex = () => {
     $scope.showTable = true;
     $scope.searchResults = false;
+    $scope.docCount = [];
     let fileSearch = $scope.selectedFile;
-    $scope.filedata = index.getIndex(fileSearch);
+
+    if (fileSearch == 'all') {
+      $scope.filedata = '';
+      status('Select a file to generate index');
+      return;
+    }
+    if (fileSearch == undefined) {
+      status('Error! No file selected');
+      return;
+    }
+
+    $scope.filedata = index.indexMap[fileSearch];
+
+    if ($scope.filedata == undefined) {
+      index.createIndex(fileSearch, $scope.content);
+      $scope.filedata = index.getIndex(fileSearch);
+    } else {
+      $scope.filedata = index.getIndex(fileSearch);
+    }
+
+    for (let fileNo = 0; fileNo < $scope.content.length; fileNo++) {
+      $scope.docCount.push(fileNo);
+    }
   }
 
   /*
@@ -60,24 +73,29 @@ app.controller('indexController', ($scope) => {
     let searchValue = $scope.terms;
     let fileSearch = $scope.selectedFile;
 
-    if (searchValue == '') {
-      $scope.showTable = true;
-      $scope.searchResults = false;
-    } else {
-      $scope.searchResult = index.searchIndex(fileSearch, searchValue);
+    if (searchValue == '' || searchValue == undefined) {
+      status('Enter at least a term');
     }
+    $scope.searchResult = index.searchIndex(fileSearch, searchValue);
+    console.log($scope.searchResult);
+  }
+
+  /*
+   * Modal Setup
+   */
+  function status(msg) {
+    $scope.message = msg;
+    $('.modal').modal();
+    $scope.$apply();
   }
 });
 
 
 //document DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  //Manage Modal
-  $('.modal-trigger').hide();
-  $('.modal').modal();
   //Attach eventlistener to file upload button
   document.getElementById('uploadJSON')
-    .addEventListener('change', function (e) {
+    .addEventListener('change', (e) => {
       let fileContent = e.target.files[0];
       let fileName = e.target.files[0].name;
       angular.element(document.getElementById('uploadJSON'))

@@ -18,31 +18,17 @@ const books = require('./books.json');
 let invertIndex, index;
 
 describe('Inverted Index TestSuite', () => {
-
     beforeEach(() => {
-        invertIndex = new invertedIndex();
+        invertIndex = new InvertedIndex();
         index = invertIndex.createIndex('books', books);
     });
 
-    describe('Inverted Index Class', () => {
-        it('should be a class', () => {
-            expect(invertIndex instanceof invertedIndex).toBe(true);
-            expect(invertIndex instanceof Object).toBe(true);
-            expect(typeof (invertIndex)).toBe('object');
-        });
-
-        it('checks for default indexMap', () => {
-            expect(typeof (invertIndex.indexMap)).toBe('object');
-        });
-    });
-
-
-    describe('Sanitize', function () {
+    describe('Sanitize', () => {
         it('return an array with sanitized tokens', () => {
-            expect(invertIndex._sanitize(books[0].title.split(' '))).toEqual(['alice', 'in', 'wonderland']);
+            expect(invertIndex.sanitize(books[0].title.split(' '))).toEqual(['alice', 'in', 'wonderland']);
         });
         it('filters out symbols', function () {
-            expect(invertIndex._sanitize(['a&lice', 'i*n', 'wonderl@.and'])).toEqual(['alice', 'in', 'wonderland']);
+            expect(invertIndex.sanitize(['a&lice', 'i*n', 'wonderl@.and'])).toEqual(['alice', 'in', 'wonderland']);
         });
     });
 
@@ -53,7 +39,7 @@ describe('Inverted Index TestSuite', () => {
     });
 
     describe('Create and Populate Index', () => {
-        let minibooks = [{
+        const minibooks = [{
             "title": "A",
             "text": "Alice."
         }];
@@ -74,7 +60,7 @@ describe('Inverted Index TestSuite', () => {
 
     describe('Get Index', () => {
         it('gets a particular index', () => {
-            expect(invertIndex.getIndex('books').a).toEqual(['0','1']);
+            expect(invertIndex.getIndex('books').a).toEqual(['0', '1']);
             expect(invertIndex.getIndex('books').alice).toEqual(['0']);
         });
     });

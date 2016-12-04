@@ -20,7 +20,7 @@ gulp.task('syncApp', function () {
         }
     });
     gulp.watch("src/*.{html,/*.css}").on('change', browser.reload);
-    gulp.watch('./jasmine/spec/inverted-index-test.js').on('change', browser.reload);
+    gulp.watch('jasmine/spec/inverted-index-test.js').on('change', browser.reload);
     gulp.watch('../../src/scripts/inverted-index.js').on('change', browser.reload);
 });
 
