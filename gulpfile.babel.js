@@ -38,4 +38,4 @@ gulp.task('browserify', () =>
 );
 
 
-gulp.task('loadApp', ['syncApp', 'testWatch'])
+gulp.task('loadApp', ['syncApp', 'testWatch']);
