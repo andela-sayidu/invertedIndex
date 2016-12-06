@@ -12,7 +12,7 @@ import gulprun from 'gulp-run';
 const browser = browserSync.create();
 
 //Browser Test
-gulp.task('syncApp', function () {
+gulp.task('syncApp', () =>  {
     browser.init({
         open: false,
         server: {
@@ -25,11 +25,6 @@ gulp.task('syncApp', function () {
 });
 
 
-gulp.task('testWatch', () => {
-    gulp.watch('jasmine/spec/*').on('change', browser.reload);
-    gulp.watch('jasmine/spec/inverted-index-test.js', ['browserify']);
-});
-
 gulp.task('browserify', () =>
     browserify('./jasmine/spec/inverted-index-test.js')
     .bundle()
@@ -37,5 +32,9 @@ gulp.task('browserify', () =>
     .pipe(gulp.dest('./jasmine/spec'))
 );
 
+gulp.task('testWatch', () => {
+    gulp.watch('jasmine/spec/*').on('change', browser.reload);
+    gulp.watch('jasmine/spec/inverted-index-test.js', ['browserify']);
+});
 
 gulp.task('loadApp', ['syncApp', 'testWatch']);

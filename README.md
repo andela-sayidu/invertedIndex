@@ -26,18 +26,21 @@ Elasticsearch uses a structure called an inverted index, which is designed to al
 
 ## Usage
 
-You may clone the repository and run the app locally to use.
+You can access the app on heroku at
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://cp1-invertedindex.herokuapp.com/)
+
+Alternatively, You may clone the repository and run the app locally to use.
 
 ## Local Installation Guide
 * Clone the repository
 * Install the dependencies using  `npm install`
-* Run `gulp syncApp` to start the application.
+* Run `gulp loadApp` to start the application.
 * The app will start on your local server.
 * Run tests with: `gulp testApp`
 
 ## Technologies
 
-* EchmaScript 6 (JavaScript 2015)
+* EcmaScript 6 (JavaScript 2015)
 * Node.js
 * Angular.js
 * Gulp (Task Runner)
