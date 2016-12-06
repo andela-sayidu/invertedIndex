@@ -23,6 +23,18 @@ class InvertedIndex {
       .replace(/[^A-Za-z0-9]/g, ''));
   }
 
+  /*
+   * Verify File Checks
+   */
+  verifyFile(fileContent) {
+    if (fileContent[0] && fileContent[0].title) {
+      return fileContent;
+    } else {
+      return false;
+    }
+  }
+
+
   /**
    * Create File Index
    *
@@ -31,11 +43,15 @@ class InvertedIndex {
    */
   createIndex(fileName, fileContent) {
     const completeIndex = [];
-    for (let value of fileContent) {
-      const title = value.title;
-      const text = value.text;
-      const mergeWords = title + ' ' + text;
-      completeIndex.push(this.sanitize(mergeWords.split(' ')));
+    if (this.verifyFile(fileContent)) {
+      for (const value of fileContent) {
+        const title = value.title;
+        const text = value.text;
+        const mergeWords = title + ' ' + text;
+        completeIndex.push(this.sanitize(mergeWords.split(' ')));
+      }
+    } else {
+      return false;
     }
     this.storeIndex(fileName, completeIndex);
   }
@@ -49,7 +65,7 @@ class InvertedIndex {
    */
   storeIndex(fileName, completeIndex) {
     const wordIndex = {};
-    for (let pos in completeIndex) {
+    for (const pos in completeIndex) {
       let posToInt = parseInt(pos);
       completeIndex[pos].forEach((word) => {
         if (wordIndex[word]) {
@@ -83,7 +99,12 @@ class InvertedIndex {
    */
   searchaFile(fileName, terms) {
     const searchResult = {};
-    const query = terms.split(' ');
+    let query;
+    if (Array.isArray(terms)) {
+      query = [].concat(...terms);
+    } else {
+      query = terms.split(' ');
+    }
     const sanitizeQuery = this.sanitize(query);
     const allFiles = this.indexMap;
 
@@ -109,13 +130,13 @@ class InvertedIndex {
     const searchResult = [];
     const allFiles = this.indexMap;
 
-    if (fileName == 'all') {
-      for (let file in allFiles) {
-        let search = this.searchaFile(file, terms);
+    if (fileName === 'all') {
+      for (const file in allFiles) {
+        const search = this.searchaFile(file, terms);
         searchResult.push(search);
       }
     } else {
-      let search = this.searchaFile(fileName, terms);
+      const search = this.searchaFile(fileName, terms);
       searchResult.push(search);
     }
     return searchResult;

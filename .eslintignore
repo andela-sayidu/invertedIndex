@@ -1,0 +1,11 @@
+/coverage/*
+/node_modules/*
+/jasmine/spec/app-test.js
+/jasmine/spec/inverted-index-test.js
+/jasmine/lib/**
+karma.conf.js
+/src/styles/*
+gulpfile.babel.js
+LICENSE
+README.md
+package.json

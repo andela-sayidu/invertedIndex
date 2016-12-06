@@ -2,6 +2,8 @@
 
 const books = require('./books.json');
 const music = require('./music.json');
+const wrong = require('./wrong.json');
+const empty = require('./empty.json');
 
 let invertIndex, index;
 
@@ -9,8 +11,10 @@ let invertIndex, index;
 describe('Inverted Index TestSuite', () => {
     beforeEach(() => {
         invertIndex = new InvertedIndex();
-        index = invertIndex.createIndex('books', books);
-        index = invertIndex.createIndex('music', music);
+        invertIndex.createIndex('books', books);
+        invertIndex.createIndex('music', music);
+        invertIndex.createIndex('wrong', wrong);
+        invertIndex.createIndex('empty', wrong);
     });
 
     describe('Sanitize', () => {
@@ -28,6 +32,11 @@ describe('Inverted Index TestSuite', () => {
         });
         it('verifies that the file content is a JSON array', function () {
             expect(Array.isArray(books)).toBeTruthy();
+        });
+        it('verifies that the JSON file is valid', () => {
+            expect(invertIndex.verifyFile(books).length).toEqual(2);
+            expect(invertIndex.verifyFile(wrong)).toBe(false);
+            expect(invertIndex.verifyFile(empty)).toBe(false);
         });
     });
 
@@ -78,6 +87,19 @@ describe('Inverted Index TestSuite', () => {
                 music: {
                     'wonderland': [],
                     'the': [0, 1]
+                }
+            }]);
+        });
+        it('ensure searchIndex can handle complex data types', () => {
+            expect(invertIndex.searchIndex('music', ['a', ['a', 'full', 'like', 'none'],
+                ['b']
+            ])).toEqual([{
+                music: {
+                    a: [1],
+                    full: [],
+                    like: [1],
+                    none: [],
+                    b: []
                 }
             }]);
         });
