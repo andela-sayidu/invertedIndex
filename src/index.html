@@ -83,13 +83,13 @@
                     <th> Showing Index for {{selectedFile}}</th>
                     <tr>
                       <th> Keywords</th>
-                      <th ng-repeat="fileNo in docCount">Document {{fileNo + 1}}</th>
+                      <th ng-repeat="fileNo in docCount[selectedFile]">Document {{$index + 1}}</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr ng-repeat="(key, value) in filedata">
                       <td class="divider"> {{key}}</td>
-                      <td ng-repeat="fileNo in docCount">
+                      <td ng-repeat="fileNo in docCount[selectedFile]">
                         <span ng-if="value.includes(fileNo)" class="glyphicon glyphicon-remove"></span>
                       </td>
                     </tr>

@@ -23,6 +23,18 @@ class InvertedIndex {
       .replace(/[^A-Za-z0-9]/g, ''));
   }
 
+  /*
+   * Verify File Checks
+   */
+  verifyFile(fileContent) {
+    if (fileContent[0] && fileContent[0].title) {
+      return fileContent;
+    } else {
+      return false;
+    }
+  }
+
+
   /**
    * Create File Index
    *
@@ -31,11 +43,15 @@ class InvertedIndex {
    */
   createIndex(fileName, fileContent) {
     const completeIndex = [];
-    for (const value of fileContent) {
-      const title = value.title;
-      const text = value.text;
-      const mergeWords = title + ' ' + text;
-      completeIndex.push(this.sanitize(mergeWords.split(' ')));
+    if (this.verifyFile(fileContent)) {
+      for (const value of fileContent) {
+        const title = value.title;
+        const text = value.text;
+        const mergeWords = title + ' ' + text;
+        completeIndex.push(this.sanitize(mergeWords.split(' ')));
+      }
+    } else {
+      return false;
     }
     this.storeIndex(fileName, completeIndex);
   }
@@ -83,7 +99,12 @@ class InvertedIndex {
    */
   searchaFile(fileName, terms) {
     const searchResult = {};
-    const query = terms.split(' ');
+    let query;
+    if (Array.isArray(terms)) {
+      query = [].concat(...terms);
+    } else {
+      query = terms.split(' ');
+    }
     const sanitizeQuery = this.sanitize(query);
     const allFiles = this.indexMap;
 
