@@ -18,7 +18,7 @@ class InvertedIndex {
    * @param {Array} indexes - String to sanitize
    * @return {Array} array of words without special characters or symbols.
    */
-   sanitize(indexes) {
+  sanitize(indexes) {
     return indexes.map(word => word.toLowerCase()
       .replace(/[^A-Za-z0-9]/g, ''));
   }
@@ -134,7 +134,7 @@ class InvertedIndex {
     const allFiles = this.indexMap;
     let query = [];
 
-    for (let i = 1; i < arguments.length; i++) {
+    for (let i = 1; i < arguments.length; i+=1) {
       if (Array.isArray(arguments[i])) {
         query = query.concat(arguments[i]);
       } else {
