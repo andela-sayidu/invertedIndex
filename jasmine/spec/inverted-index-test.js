@@ -78,7 +78,7 @@ describe('Inverted Index TestSuite', () => {
             }]);
         });
         it('find terms in all files  when required', () => {
-            expect(invertIndex.searchIndex('all', 'the wonderland')).toEqual([{
+            expect(invertIndex.searchIndex('all', 'the','wonderland')).toEqual([{
                 books: {
                     'wonderland': [0],
                     'the': [1]
@@ -91,9 +91,9 @@ describe('Inverted Index TestSuite', () => {
             }]);
         });
         it('ensure searchIndex can handle complex data types', () => {
-            expect(invertIndex.searchIndex('music', ['a', ['a', 'full', 'like', 'none'],
+            expect(invertIndex.searchIndex('music', 'a', ['a', 'full', 'like', 'none'],
                 ['b']
-            ])).toEqual([{
+            )).toEqual([{
                 music: {
                     a: [1],
                     full: [],
