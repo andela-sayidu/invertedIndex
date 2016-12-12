@@ -97,14 +97,6 @@ class InvertedIndex {
    * @param {String} terms
    * @return {Object} returns search results
    */
-
-  /**
-   * Search a File
-   *
-   * @param {String} fileName
-   * @param {String} terms
-   * @return {Object} returns search results
-   */
   searchaFile(fileName, terms) {
     const searchResult = {};
     const sanitizeQuery = this.sanitize(terms);
@@ -126,15 +118,15 @@ class InvertedIndex {
    *
    * @param {String} fileName
    * @param {String} terms
-   * @return {Array} returns search results
-   *  */
+   * @returngit {Array} returns search results
+   */
 
   searchIndex(fileName, terms) {
     const searchResult = [];
     const allFiles = this.indexMap;
     let query = [];
 
-    for (let i = 1; i < arguments.length; i+=1) {
+    for (let i = 1; i < arguments.length; i += 1) {
       if (Array.isArray(arguments[i])) {
         query = query.concat(arguments[i]);
       } else {
